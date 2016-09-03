@@ -67,4 +67,11 @@ bot.command(:close_poll, chain_usable: false, description: "This will close a po
   return
 end
 
+bot.command(:close_polls, chain_usable: false, description: "Closes down this bot") do |event|
+  if event.user.id == 156654364197519360
+    event.respond "Pollbot is going down..."
+    exit
+  end
+end
+
 bot.run
