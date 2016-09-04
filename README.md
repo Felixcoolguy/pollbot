@@ -38,3 +38,10 @@ This bot depends on 3 environment veriables to function properly
 | CLIENT_ID | You client ID, found in the [Discord applications page](https://discordapp.com/developers/applications/me) |
 | OWNER_ID | The user ID of the person running the bot, this ID is needed to shut down the bot with a command |
 
+## Dependencies
+Poll bot depends on 2 dependencies
+
+* [DOTENV](https://github.com/bkeepers/dotenv)
+* [discordrb](https://github.com/meew0/discordrb)
+
+These are included in the `Gemfile` in the repository
