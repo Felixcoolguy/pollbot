@@ -20,7 +20,6 @@ bot.command(:poll, chain_usable: false, description: "Start a poll") do |event, 
 
   if @poll.nil?
     if arguments.length > 0
-
       @poll = Poll.create(event.channel.id, event.user, arguments)
       if @poll.nil?
         event.respond "I can't make a poll of that"
@@ -36,7 +35,7 @@ bot.command(:poll, chain_usable: false, description: "Start a poll") do |event, 
     if arguments.length > 0
       event.respond "Sorry, only one poll per channel"
     end
-    display_current_poll(event, "Poll by #{@poll.owner.name}: `#{@poll.question}`", @poll)
+    display_poll_results(event, "Poll by #{@poll.owner.name}: `#{@poll.question}`", @poll)
     event.respond "You can vote by calling `!vote <number>`"
   end
   return
