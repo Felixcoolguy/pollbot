@@ -4,8 +4,8 @@ require './lib/poll'
 
 Dotenv.load
 
+puts "Starting bot..."
 bot = Discordrb::Commands::CommandBot.new token: ENV['TOKEN'], application_id: ENV['APPLICATION_ID'], prefix: "!"
-
 puts "This bot's invite URL is #{bot.invite_url}."
 polls = Array.new
 
@@ -14,6 +14,18 @@ def display_poll_results(event, title, poll)
   poll.results.each do |l|
     event.respond l
   end
+end
+
+mic_holder_id = nil
+
+bot.command(:mic, min_args:1) do |event, argument, argument2, argument3|
+
+  if user = bot.parse_mention(argument)
+    break unless !mic_holder_id.nil? and event.user.id == mic_holder_id and event.user.id != user.id
+    mic_holder_id = user.id
+    "#{user.mention} was given the microphone!"
+  end
+
 end
 
 bot.command(:poll, chain_usable: false, description: "Start a poll") do |event, *arguments|

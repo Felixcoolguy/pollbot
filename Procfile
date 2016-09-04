@@ -1,1 +1,1 @@
-worker: ruby pollbot.rb
+worker: bundle exec ruby pollbot.rb
