@@ -12,14 +12,22 @@ This will start a poll with the default `Yes` and `No` answers.
 `!poll [Question], [Answer 1], [Answer 2], etc`  
 This will start a poll with the specified answers.
 
+### Display the current poll
 `!poll`  
 If there is a poll running it will display the current poll, otherwise it will tell you there is no poll running.
 
+### Vote for an answer
 `!vote [index of answer]`  
 This will vote for an answer, when a poll is shown it will display a number for each answer. If the user has already voted, it's vote will change to the new answer.
 
+### Closing the poll
+
 `!close_poll`  
 When a poll is active, the poll can only be closed by the user who opened it, or the owner of the bot (see `Environment variables` below).
+
+### Shut down the bot
+`!close_polls`  
+This will stop the running poll bot.
 
 ## Environment variables
 This bot depends on 3 environment veriables to function properly

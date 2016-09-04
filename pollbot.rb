@@ -59,7 +59,7 @@ bot.command(:close_poll, chain_usable: false, description: "This will close a po
   if poll.nil?
     event.respond "There is no poll open at the moment"
   else
-    if poll.owner.id == event.user.id
+    if poll.owner.id == event.user.id || event.user.id == ENV["OWNER_ID"]
       event.respond "The poll is now closed"
       display_poll_results(event, "Final poll results for `#{poll.question}`", poll)
       polls.delete(poll)
