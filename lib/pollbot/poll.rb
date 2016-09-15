@@ -2,48 +2,32 @@ require_relative 'answer'
 require_relative 'vote'
 
 class Poll
+  attr_accessor :poll_id
   attr_accessor :channel_id
-  attr_accessor :owner
+  attr_accessor :owner_id
+  attr_accessor :owner_name
   attr_accessor :question
   attr_accessor :answers
 
-  def self.create(channel_id, user, *arguments)
-    poll = Poll.new
-    poll.channel_id = channel_id
-    poll.owner = user
-    poll.answers = Array.new
-
-    line = arguments.join(' ')
-    parts = line.split(',')
-
-    if parts.length == 0
-      nil and return
-    elsif parts.length == 1 || parts.length == 2
-      poll.question = parts[0].strip
-      poll.answers.push(Answer.create(0, "Yes"))
-      poll.answers.push(Answer.create(1, "No"))
-    else
-      poll.question = parts[0].strip
-      parts.each_with_index { |text, index|
-        next if index == 0
-        poll.answers.push(Answer.create(index - 1, text.strip))
-      }
-    end
-    poll
+  def initialize
   end
 
   def results
     lines = Array.new
 
-    answers.each do |a|
-      lines.push "[#{a.index + 1}] #{a.title} : #{a.votes.length} votes"
-    end
+    answers.each_with_index { |answer, index|
+      lines.push "[#{index + 1}] #{answer.title} : #{answer.vote_count} votes"
+    }
 
     lines
   end
 
-  def vote(user_id, index)
+  def answer_for_vote(answer_id)
+    a = answers.find { |a| a.answer_id == answer_id }
+    return a
+  end
 
+  def vote(user_id, index)
     already_voted = false
 
     if !index.is_i? || index.to_i > answers.length || index.to_i < 1
@@ -61,6 +45,7 @@ class Poll
       vote = Vote.new
       vote.answer_index = index
       vote.voter = user_id
+      vote.vote_id = nil
       answer.votes.push(vote)
 
       if already_voted
